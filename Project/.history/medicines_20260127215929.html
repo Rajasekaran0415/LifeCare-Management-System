@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeCare Medicines</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f0f2f5; }
+        .search-box { border-radius: 50px; padding: 15px 25px; border: 2px solid #0dcaf0; }
+        .medicine-card {
+            border: none; border-radius: 15px; transition: 0.3s;
+            background: white; border-left: 5px solid #0dcaf0;
+        }
+        .medicine-card:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .cart-sticky { position: sticky; top: 90px; }
+        .btn-info { color: white !important; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-3">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center fw-bold fs-4 text-info" href="index.html">
+            <img src="logo.png" alt="Logo" width="35" class="me-2"> LifeCare Pharmacy
+        </a>
+    </div>
+</nav>
+
+<div class="container py-4">
+    <div class="row mb-5">
+        <div class="col-md-8 mx-auto">
+            <div class="input-group">
+                <input type="text" id="searchInput" class="form-control search-box shadow-none" placeholder="Search medicines (e.g. Dolo, Insulin, Vitamin)..." onkeyup="searchMedicine()">
+            </div>
+            <p class="text-center text-muted mt-2 small">Search from our database of 1000+ medicines</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row g-3" id="medicine-list">
+                </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="cart-sticky bg-white p-4 rounded-4 shadow-sm">
+                <h5 class="fw-bold border-bottom pb-2"><i class="fas fa-shopping-cart text-info me-2"></i>My Cart</h5>
+                <div id="cart-content" class="py-3" style="max-height: 300px; overflow-y: auto;">
+                    <p class="text-muted text-center">Your cart is empty</p>
+                </div>
+                <div class="d-flex justify-content-between fw-bold fs-5 mt-3">
+                    <span>Total:</span>
+                    <span class="text-info">₹<span id="total-price">0</span></span>
+                </div>
+                <button onclick="checkout()" class="btn btn-info w-100 rounded-pill py-3 mt-4 shadow">Book Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="otpModal" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0">
+            <div class="modal-body text-center p-5">
+                <div id="phone-view">
+                    <i class="fas fa-mobile-alt fa-3x text-info mb-3"></i>
+                    <h4 class="fw-bold">Verification</h4>
+                    <p class="text-muted">Enter mobile number to proceed</p>
+                    <input type="text" id="phoneInput" class="form-control mb-3 text-center rounded-pill" placeholder="Enter 10 digit number">
+                    <button onclick="sendOTP()" class="btn btn-info w-100 rounded-pill">Send OTP</button>
+                </div>
+                <div id="otp-view" class="d-none">
+                    <h4 class="fw-bold">Verify OTP</h4>
+                    <p class="text-muted">Enter code sent to your phone (Use 1234)</p>
+                    <input type="text" id="otpInput" class="form-control mb-3 text-center rounded-pill" placeholder="0 0 0 0">
+                    <button onclick="verifyAndSuccess()" class="btn btn-success w-100 rounded-pill">Confirm Order</button>
+                </div>
+                <div id="success-view" class="d-none">
+                    <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                    <h3 class="fw-bold">Order Placed!</h3>
+                    <p>Your order has been successfully booked.</p>
+                    <button onclick="location.reload()" class="btn btn-outline-info rounded-pill px-5">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 1. Medicines Data (இங்கு நீங்கள் எவ்வளவு மருந்துகள் வேண்டுமானாலும் சேர்த்துக்கொள்ளலாம்)
+    const medicines = [
+        { id: 1, name: "Dolo 650", price: 30, desc: "Fever & Pain Relief" },
+        { id: 2, name: "Paracetamol 500", price: 25, desc: "Common Aches" },
+        { id: 3, name: "Cetirizine", price: 40, desc: "Allergy & Cold" },
+        { id: 4, name: "Amoxicillin", price: 120, desc: "Antibiotics" },
+        { id: 5, name: "Metformin", price: 80, desc: "Diabetes Care" },
+        { id: 6, name: "Atorvastatin", price: 150, desc: "Cholesterol Control" },
+        { id: 7, name: "Omeprazole", price: 55, desc: "Acidity & Gas" },
+        { id: 8, name: "Insulin Injection", price: 450, desc: "Diabetes Management" },
+        { id: 9, name: "Vitamin C", price: 90, desc: "Immunity Booster" },
+        { id: 10, name: "Azithromycin", price: 110, desc: "Bacterial Infections" },
+        { id: 11, name: "Pantoprazole", price: 65, desc: "Stomach Ulcer" },
+        { id: 12, name: "Loratadine", price: 35, desc: "Anti-Allergy" }
+    ];
+
+    let cart = [];
+
+    // 2. Display Medicines
+    function displayMedicines(list) {
+        const listDiv = document.getElementById('medicine-list');
+        listDiv.innerHTML = "";
+        
+        if(list.length === 0) {
+            listDiv.innerHTML = "<div class='text-center p-5'><p>No medicines found.</p></div>";
+            return;
+        }
+
+        list.forEach(med => {
+            listDiv.innerHTML += `
+                <div class="col-md-6">
+                    <div class="medicine-card p-3 d-flex align-items-center justify-content-between shadow-sm">
+                        <div>
+                            <h6 class="fw-bold mb-0">${med.name}</h6>
+                            <small class="text-muted">${med.desc}</small>
+                            <p class="text-info fw-bold mb-0">₹${med.price}</p>
+                        </div>
+                        <button onclick="addToCart(${med.id})" class="btn btn-info btn-sm rounded-pill px-4 shadow-sm">Add</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // 3. Search Logic
+    function searchMedicine() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = medicines.filter(m => m.name.toLowerCase().includes(query));
+        displayMedicines(filtered);
+    }
+
+    // 4. Cart Logic
+    function addToCart(id) {
+        const med = medicines.find(m => m.id === id);
+        cart.push(med);
+        renderCart();
+    }
+
+    function renderCart() {
+        const cartDiv = document.getElementById('cart-content');
+        const totalDiv = document.getElementById('total-price');
+        
+        if(cart.length === 0) {
+            cartDiv.innerHTML = '<p class="text-muted text-center">Your cart is empty</p>';
+            totalDiv.innerText = "0";
+            return;
+        }
+
+        let total = 0;
+        cartDiv.innerHTML = "";
+        cart.forEach((item, index) => {
+            total += item.price;
+            cartDiv.innerHTML += `
+                <div class="d-flex justify-content-between mb-2 small border-bottom pb-1">
+                    <span>${item.name}</span>
+                    <span class="fw-bold">₹${item.price} <i class="fas fa-times text-danger ms-2" onclick="removeItem(${index})" style="cursor:pointer"></i></span>
+                </div>
+            `;
+        });
+        totalDiv.innerText = total;
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        renderCart();
+    }
+
+    // 5. Checkout Process
+    function checkout() {
+        if(cart.length === 0) return alert("Add medicines first!");
+        const modal = new bootstrap.Modal(document.getElementById('otpModal'));
+        modal.show();
+    }
+
+    function sendOTP() {
+        if(document.getElementById('phoneInput').value.length < 10) return alert("Enter valid phone!");
+        document.getElementById('phone-view').classList.add('d-none');
+        document.getElementById('otp-view').classList.remove('d-none');
+    }
+
+    function verifyAndSuccess() {
+        if(document.getElementById('otpInput').value === "1234") {
+            document.getElementById('otp-view').classList.add('d-none');
+            document.getElementById('success-view').classList.remove('d-none');
+        } else {
+            alert("Wrong OTP! Use 1234");
+        }
+    }
+
+    // Initialize
+    window.onload = () => displayMedicines(medicines);
+</script>
+</body>
+</html>

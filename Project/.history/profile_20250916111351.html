@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .profile-container { background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); width: 100%; max-width: 500px; }
+        h2 { text-align: center; color: #007BFF; margin-bottom: 25px; }
+        .profile-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
+        .profile-item:last-child { border-bottom: none; }
+        .profile-item label { font-weight: bold; color: #555; margin-right: 15px; }
+        .profile-item span { color: #333; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h2>My Patient Profile</h2>
+        <div class="profile-item">
+            <label>Full Name:</label>
+            <span id="profile-name"></span>
+        </div>
+        <div class="profile-item">
+            <label>Email Address:</label>
+            <span id="profile-email"></span>
+        </div>
+        <div class="profile-item">
+            <label>Date of Birth:</label>
+            <span id="profile-dob"></span>
+        </div>
+        <div class="profile-item">
+            <label>Phone Number:</label>
+            <span id="profile-phone"></span>
+        </div>
+        <div class="profile-item">
+            <label>Patient ID:</label>
+            <span id="profile-id"></span>
+        </div>
+    </div>
+
+    <script>
+        // Example of how the data would be fetched and displayed.
+        // In a real application, this would be done after a user logs in.
+        
+        // This is sample data, you would replace this with a fetch call to your backend API.
+        const patientData = {
+            id: 'PAT-12345',
+            name: 'John Doe',
+            email: 'johndoe@example.com',
+            dob: '1990-05-20',
+            phone: '+1 (555) 123-4567'
+        };
+
+        document.getElementById('profile-id').innerText = patientData.id;
+        document.getElementById('profile-name').innerText = patientData.name;
+        document.getElementById('profile-email').innerText = patientData.email;
+        document.getElementById('profile-dob').innerText = patientData.dob;
+        document.getElementById('profile-phone').innerText = patientData.phone;
+    </script>
+</body>
+</html>

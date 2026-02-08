@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeCare | Nurse Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Poppins', sans-serif; }
+        .table-container { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .table thead { background-color: #0dcaf0; color: white; }
+        .nav-back { background: #0dcaf0; padding: 10px 20px; border-radius: 50px; display: inline-block; transition: 0.3s; }
+        .nav-back:hover { background: #0baccc; transform: translateX(-5px); }
+        .badge-date { background-color: #e3f2fd; color: #0d6efd; border: 1px solid #0d6efd; }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="text-start mb-4 animate__animated animate__fadeIn">
+        <a href="index.html" class="nav-back text-white text-decoration-none small shadow-sm">
+            <i class="bi bi-house-door me-2"></i>Back to Home
+        </a>
+        <h1 class="mt-4 fw-bold text-dark">Patient Appointments</h1>
+        <p class="text-muted">Viewing all scheduled medical consultations</p>
+    </div>
+
+    <div class="table-container animate__animated animate__fadeInUp">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th class="py-3">ID</th>
+                        <th class="py-3">Hospital</th>
+                        <th class="py-3">Patient Name</th>
+                        <th class="py-3">Doctor</th>
+                        <th class="py-3">Date & Time</th>
+                        <th class="py-3 text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentTableBody">
+                    <tr>
+                        <td colspan="6" class="text-center py-4">Loading appointments...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:8080/appointments/getall"; 
+
+    async function loadAppointments() {
+        const tableBody = document.getElementById('appointmentTableBody');
+        
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error("Network response was not ok");
+            
+            const appointments = await response.json();
+            tableBody.innerHTML = ""; 
+
+            if (appointments.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='6' class='text-center'>No appointments found.</td></tr>";
+                return;
+            }
+
+            appointments.forEach(app => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td class="fw-bold text-info">#${app.id}</td>
+                        <td><i class="bi bi-hospital me-2"></i>${app.hospitalName || 'N/A'}</td>
+                        <td class="fw-semibold">${app.patientName || 'N/A'}</td>
+                        <td>Dr. ${app.doctorName || 'N/A'}</td>
+                        <td>
+                            <span class="badge badge-date text-dark">${app.appointmentDate || 'N/A'}</span>
+                            <br>
+                            <small class="text-muted"><i class="bi bi-clock me-1"></i>${app.appointmentTime || ''}</small>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-outline-info rounded-pill px-3">
+                                <i class="bi bi-eye me-1"></i>Details
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            tableBody.innerHTML = `<tr><td colspan='6' class='text-center text-danger'>
+                <i class="bi bi-exclamation-triangle me-2"></i>Failed to fetch data from Server.
+                <br><small>${error.message}</small></td></tr>`;
+        }
+    }
+
+    window.onload = loadAppointments;
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

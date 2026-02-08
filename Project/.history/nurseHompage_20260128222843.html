@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeCare | Nurse Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Poppins', sans-serif; }
+        .table-container { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .table thead { background-color: #0dcaf0; color: white; }
+        .nav-back { background: #0dcaf0; padding: 10px 20px; border-radius: 50px; display: inline-block; transition: 0.3s; }
+        .nav-back:hover { background: #0baccc; transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="text-start mb-4 animate__animated animate__fadeIn">
+        <a href="index.html" class="nav-back text-white text-decoration-none small shadow-sm">
+            <i class="bi bi-house-door me-2"></i>Back to Home
+        </a>
+        <h1 class="mt-4 fw-bold text-dark">Patient Appointments</h1>
+        <p class="text-muted">Manage and view all incoming appointments</p>
+    </div>
+
+    <div class="table-container animate__animated animate__fadeInUp">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th class="py-3">ID</th>
+                        <th class="py-3">Patient Name</th>
+                        <th class="py-3">Age</th>
+                        <th class="py-3">Gender</th>
+                        <th class="py-3">Blood Group</th>
+                        <th class="py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentTableBody">
+                    <tr>
+                        <td colspan="6" class="text-center py-4">Loading appointments...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // உங்கள் Backend API URL-ஐ இங்கு கொடுக்கவும்
+    const API_URL = "http://localhost:8080/appointments/getall"; 
+
+    async function loadAppointments() {
+        try {
+            const response = await fetch(API_URL);
+            const appointments = await response.json();
+            
+            const tableBody = document.getElementById('appointmentTableBody');
+            tableBody.innerHTML = ""; // பழைய மெசேஜை நீக்க
+
+            if (appointments.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='6' class='text-center'>No appointments found.</td></tr>";
+                return;
+            }
+
+            appointments.forEach(app => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td class="fw-bold">#${app.id}</td>
+                        <td>${app.name}</td>
+                        <td>${app.age}</td>
+                        <td><span class="badge bg-light text-dark border">${app.gender}</span></td>
+                        <td><span class="text-danger fw-bold">${app.bloodgroup}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-info rounded-pill">View Info</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            document.getElementById('appointmentTableBody').innerHTML = 
+                "<tr><td colspan='6' class='text-center text-danger'>Server உடன் இணைப்பதில் சிக்கல் உள்ளது.</td></tr>";
+        }
+    }
+
+    window.onload = loadAppointments;
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

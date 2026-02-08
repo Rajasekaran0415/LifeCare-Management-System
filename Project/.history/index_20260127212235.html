@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeCare | Premium Healthcare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        /* Minimal style just for font and hero height since BS doesn't do vh-80 or Poppins by default */
+        body { font-family: 'Poppins', sans-serif; background-color: #fdfdfd; }
+        .hero-bg { 
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(62, 62, 62, 0.3)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-3">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <div class="bg-info bg-gradient p-2 rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                <i class="fa-solid fa-heart-pulse text-white"></i>
+            </div>
+            <span class="fw-bold tracking-tight text-dark">LifeCare</span>
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#">Doctors</a></li>
+                <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#">Services</a></li>
+                <li class="nav-item ms-lg-3"><a class="btn btn-outline-info rounded-pill px-4" href="#">Login</a></li>
+                <li class="nav-item ms-lg-2"><a class="btn btn-info bg-gradient text-white rounded-pill px-4 shadow-sm" href="#">Sign Up</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-bg vh-100 d-flex align-items-center text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 animate__animated animate__fadeInLeft">
+                <span class="badge bg-info mb-3 px-3 py-2 rounded-pill">World-Class Healthcare</span>
+                <h1 class="display-2 fw-bold lh-1 mb-4">Your Health is Our <span class="text-info">Priority One</span></h1>
+                <p class="lead mb-5 text-white-50">Experience medical excellence with our team of specialists and state-of-the-art technology dedicated to your well-being.</p>
+                <div class="d-flex gap-3">
+                    <button class="btn btn-info bg-gradient btn-lg text-white rounded-pill px-5 py-3 shadow">Book Now</button>
+                    <button class="btn btn-outline-light btn-lg rounded-pill px-5 py-3">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5 mt-n5">
+    <div class="row g-4">
+        <div class="col-md-4 animate__animated animate__fadeInUp">
+            <div class="card border-0 shadow-lg rounded-4 p-4 text-center h-100 transition-up">
+                <div class="text-info mb-4">
+                    <i class="fa-solid fa-hospital fa-3x"></i>
+                </div>
+                <h4 class="fw-bold">Modern Hospitals</h4>
+                <p class="text-muted small">Equipped with the latest medical technology for precise diagnosis and surgery.</p>
+                <a href="#" class="btn btn-link text-info text-decoration-none fw-semibold">View Locations →</a>
+            </div>
+        </div>
+        <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="card border-0 shadow-lg rounded-4 p-4 text-center h-100">
+                <div class="text-info mb-4">
+                    <i class="fas fa-user-md fa-3x"></i>
+                </div>
+                <h4 class="fw-bold">Expert Doctors</h4>
+                <p class="text-muted small">Access to over 500+ specialists across cardiology, neurology, and more.</p>
+                <a href="#" class="btn btn-link text-info text-decoration-none fw-semibold">Find a Specialist →</a>
+            </div>
+        </div>
+        <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-2s">
+            <div class="card border-0 shadow-lg rounded-4 p-4 text-center h-100">
+                <div class="text-info mb-4">
+                    <i class="fas fa-microscope fa-3x"></i>
+                </div>
+                <h4 class="fw-bold">Smart Labs</h4>
+                <p class="text-muted small">Get your reports online within 24 hours with our automated lab systems.</p>
+                <a href="#" class="btn btn-link text-info text-decoration-none fw-semibold">Book a Test →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="bg-light py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h6 class="text-info fw-bold text-uppercase">Testimonials</h6>
+            <h2 class="display-5 fw-bold">Patient Success Stories</h2>
+        </div>
+        
+        <div class="row align-items-center bg-white shadow rounded-5 overflow-hidden mx-0 mb-5">
+            <div class="col-md-5 px-0">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800" class="img-fluid h-100" style="object-fit: cover; min-height: 400px;" alt="Patient">
+            </div>
+            <div class="col-md-7 p-5">
+                <i class="fa-solid fa-quote-left text-info fa-3x opacity-25 mb-3"></i>
+                <h3 class="fw-bold">"Exceptional Care & Support"</h3>
+                <p class="fs-5 text-muted fst-italic">"The diabetes management program here is life-changing. The doctors don't just give medicine; they provide a lifestyle plan that actually works."</p>
+                <hr class="w-25 border-info border-2">
+                <h5 class="mb-0 fw-bold">Ravi Kumar</h5>
+                <small class="text-info">Type 2 Diabetes Patient</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-white pt-5 pb-3">
+    <div class="container">
+        <div class="row g-4 mb-5">
+            <div class="col-lg-4">
+                <h4 class="fw-bold text-info mb-4">LifeCare</h4>
+                <p class="text-secondary">Providing quality healthcare for everyone. We believe in a world where medical help is just a click away.</p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-lg-2 ms-lg-auto">
+                <h6 class="fw-bold mb-4">Services</h6>
+                <ul class="list-unstyled text-secondary">
+                    <li class="mb-2">Telehealth</li>
+                    <li class="mb-2">Emergency</li>
+                    <li class="mb-2">Diagnostics</li>
+                </ul>
+            </div>
+            <div class="col-6 col-lg-3">
+                <h6 class="fw-bold mb-4">Contact Info</h6>
+                <ul class="list-unstyled text-secondary">
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Chennai, Tamil Nadu</li>
+                    <li class="mb-2"><i class="fas fa-phone me-2"></i> +91 98765 43210</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2"></i> help@lifecare.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-top border-secondary pt-3 text-center">
+            <p class="small text-secondary mb-0">&copy; 2026 LifeCare Medical Services. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

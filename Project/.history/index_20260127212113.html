@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeCare | Modern Healthcare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0dcaf0 0%, #007bff 100%);
+            --dark-navy: #1a2a6c;
+            --soft-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--soft-bg);
+            overflow-x: hidden;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark-navy) !important;
+            margin: 0 10px;
+        }
+
+        .nav-link:hover {
+            color: #0dcaf0 !important;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2053');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            clip-path: ellipse(150% 100% at 50% 0%);
+        }
+
+        /* Card Animations */
+        .service-card {
+            border: none;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: white;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .service-card i {
+            font-size: 2.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        /* Custom Button */
+        .btn-gradient {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .btn-gradient:hover {
+            transform: scale(1.05);
+            color: white;
+            box-shadow: 0 10px 20px rgba(13, 202, 240, 0.3);
+        }
+
+        /* Scroll Animation Utility */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Patient Stories Styling */
+        .story-container {
+            border-radius: 30px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .story-content {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 3rem;
+        }
+
+        footer {
+            background: var(--dark-navy);
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <i class="fa-solid fa-heart-pulse me-2 text-info fs-3"></i>
+            <span class="fw-bold fs-4">LifeCare</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ms-auto">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#" class="nav-link">Doctors</a>
+                <a href="#" class="nav-link">Reports</a>
+                <a href="#" class="btn btn-outline-info ms-lg-3">Login</a>
+                <a href="#" class="btn btn-gradient ms-lg-2">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold mb-3 animate__animated animate__fadeInDown">Better Care for a <span class="text-info">Better Tomorrow</span></h1>
+        <p class="lead mb-5 opacity-75">Expert medical care with a human touch, powered by innovation.</p>
+        <a href="#" class="btn btn-gradient btn-lg">Book Appointment Now</a>
+    </div>
+</section>
+
+<div class="container mt-5 pt-5">
+    <h2 class="text-center fw-bold mb-5">Our Core Services</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card service-card p-5 text-center scroll-reveal">
+                <i class="fa-solid fa-hospital"></i>
+                <h3>Hospitals</h3>
+                <p class="text-muted">High-tech infrastructure for complex medical needs.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card service-card p-5 text-center scroll-reveal">
+                <i class="fas fa-user-md"></i>
+                <h3>Expert Doctors</h3>
+                <p class="text-muted">Specialized care from the world's leading practitioners.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card service-card p-5 text-center scroll-reveal">
+                <i class="fas fa-microscope"></i>
+                <h3>Advanced Labs</h3>
+                <p class="text-muted">Precise diagnostics with 24/7 support.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="container my-5 py-5">
+    <div class="row story-container mx-0 scroll-reveal">
+        <div class="col-md-5 px-0">
+            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=1000" class="w-100 h-100" style="object-fit: cover;" alt="Success Story">
+        </div>
+        <div class="col-md-7 story-content d-flex flex-column justify-content-center">
+            <span class="badge bg-white text-info mb-3 w-25">Patient Story</span>
+            <h2>"Early Detection Saved My Life"</h2>
+            <p class="fs-5 opacity-90 mt-3">"I came in for a routine checkup and found high blood sugar levels. Thanks to the team at LifeCare, I was able to manage it before it became a crisis."</p>
+            <p class="fw-bold mt-2">- Ravi Kumar, 66</p>
+        </div>
+    </div>
+</section>
+
+<footer class="py-5 mt-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <h3 class="text-white mb-4">LifeCare</h3>
+                <p>Leading the way in medical excellence and compassionate patient care.</p>
+                <div class="d-flex gap-3 fs-4 mt-3">
+                    <i class="fab fa-facebook text-info"></i>
+                    <i class="fab fa-instagram text-info"></i>
+                    <i class="fab fa-linkedin text-info"></i>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h5 class="text-white mb-4">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none text-secondary">Find a Doctor</a></li>
+                    <li><a href="#" class="text-decoration-none text-secondary">Our Facilities</a></li>
+                    <li><a href="#" class="text-decoration-none text-secondary">Health Blog</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5 class="text-white mb-4">Contact</h5>
+                <p><i class="fas fa-envelope me-2"></i> help@lifecare.com</p>
+                <p><i class="fas fa-phone me-2"></i> +91 98765 43210</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

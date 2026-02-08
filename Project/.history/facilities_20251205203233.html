@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifecare Dashboard - Facilities</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0d6efd; /* Bootstrap Blue */
+            --secondary-color: #28a745; /* A bright green for emphasis */
+            --border-radius: 0.5rem;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6; 
+            color: #333;
+        }
+
+        /* --- Custom Tile Styling (Retaining your original look) --- */
+        .tile {
+            background-color: #fff;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .tile:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+        }
+
+        .tile-icon {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        /* Ensures the text in the tile is black and bold */
+        .tile-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* --- Custom Facilities Card Styling --- */
+        .facility-card {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            /* Use Bootstrap classes for border, radius, shadow: border rounded shadow-sm */
+            transition: box-shadow 0.3s;
+        }
+
+        .facility-card:hover {
+            /* Increase shadow on hover */
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .facility-card h4 {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .facility-card h4 i {
+            margin-right: 0.5rem;
+            color: var(--secondary-color); /* Use the bright green for service icon */
+        }
+        
+        .facility-card p {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header class="bg-white py-3 shadow-sm">
+    <div class="container fw-bold fs-4 text-primary">Lifecare</div>
+</header>
+
+<div class="container my-5">
+
+    <h2 class="fs-5 fw-semibold mb-4">Core Services</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        
+        <div class="col">
+            <div class="tile top-tile">
+                <i class="fa-solid fa-hospital tile-icon"></i>
+                <div class="tile-title">Hospitals</div>
+                <p class="tile-description text-muted mb-0">Where healing begins, and hope never ends</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="tile top-tile">
+                <i class="fa-solid fa-user-doctor tile-icon"></i>
+                <div class="tile-title">Doctors</div>
+                <p class="tile-description text-muted mb-0">Guiding you through every step of healing</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="tile top-tile" onclick="toggleFacilitiesList()">
+                <i class="fa-solid fa-tools tile-icon"></i>
+                <div class="tile-title">Facilities</div>
+                <p class="tile-description text-muted mb-0">Our Infrastructure and Facilities</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <h2 class="section-heading fs-4 fw-bold mb-4" id="facilities-heading" style="display: none;">Hospital Departments & Centers</h2>
+    
+    <div id="detailed-facilities" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" style="display: none;">
+        
+        <div class="col">
+            <div class="facility-card border rounded shadow-sm">
+                <h4><i class="fas fa-ambulance"></i> Emergency & Trauma Center</h4>
+                <p>24/7 immediate care for critical conditions, accidents, and sudden illnesses.</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="facility-card border rounded shadow-sm">
+                <h4><i class="fas fa-x-ray"></i> Radiology & Imaging</h4>
+                <p>Advanced diagnostic tools: MRI, CT Scans, X-rays, Ultrasound, and PET Scans.</p>
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="facility-card border rounded shadow-sm">
+                <h4><i class="fas fa-bed-pulse"></i> Operation Theatres (OT)</h4>
+                <p>State-of-the-art sterile surgical suites for general, specialty, and minimally invasive procedures.</p>
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="facility-card border rounded shadow-sm">
+                <h4><i class="fas fa-flask"></i> Clinical Laboratory</h4>
+                <p>In-house pathology, hematology, and microbiology services for timely diagnosis.</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="facility-card border rounded shadow-sm">
+                <h4><i class="fas fa-heart-pulse"></i> Intensive Care Units (ICU/CCU)</h4>
+                <p>Dedicated units for Cardiac Care (CCU), Neonatal Care (NICU), and Medical/Surgical intensive care.</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="facility-card border rounded shadow-sm">
+                <h4><i class="fas fa-wheelchair"></i> Physiotherapy & Rehab</h4>
+                <p>Post-operative and injury rehabilitation, sports medicine, and pain management services.</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    function toggleFacilitiesList() {
+        const list = document.getElementById('detailed-facilities');
+        const heading = document.getElementById('facilities-heading');
+        
+        if (list.style.display === 'none') {
+            list.style.display = 'flex'; // Use flex/block/grid for display
+            heading.style.display = 'block';
+        } else {
+            list.style.display = 'none';
+            heading.style.display = 'none';
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

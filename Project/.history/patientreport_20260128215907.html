@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5 p-4 bg-white shadow rounded" style="max-width: 600px;">
+
+    <h2 class="text-center text-primary mb-4">Patient Report</h2>
+
+    <p class="text-center text-muted">
+        Click the button below to download your medical report.
+    </p>
+
+    <div class="d-grid mt-4">
+                <button class="btn btn-success btn-lg" onclick="downloadReport(currentPatientId)">
+            Download Patient Report (PDF)
+        </button>
+    </div>
+
+</div>
+
+<script>
+// 💡 IMPORTANT: This variable must be defined and updated after a successful login API call.
+let currentPatientId = 0; // Replace '13' with the dynamically logged-in patient's ID
+currentPatientId++;
+
+/* -------------------- Download Patient Report as PDF -------------------- */
+function downloadReport(patientid) {
+    // 1. Check if a valid ID was passed
+    if (!patientid || patientid === 0) {
+        alert("Error: Patient ID is missing or invalid. Please log in.");
+        return;
+    }
+
+
+    fetch(`http://localhost:8080/patients/report/${patientid}`, {
+        method: "GET"
+    })
+    .then(response => {
+        if (!response.ok) {
+
+            throw new Error(`Server returned: ${response.status} ${response.statusText || 'Error'}`);
+        }
+        return response.blob(); 
+    })
+    .then(blob => {
+
+        const fileURL = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = fileURL;
+        
+        a.download = `Patient_Report_${patientid}.pdf`; 
+        
+        document.body.appendChild(a);
+        a.click();  
+        
+       
+        window.URL.revokeObjectURL(fileURL);
+        a.remove();
+    })
+    .catch(error => {
+        console.error("Error downloading report:", error);
+        alert(`Failed to download report: ${error.message}. Please check if the patient ID exists on the server.`);
+    });
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
