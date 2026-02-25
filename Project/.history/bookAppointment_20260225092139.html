@@ -173,7 +173,7 @@ document.getElementById("hospitalDropdown").addEventListener("change", function 
     doctorDropdown.disabled = false;
     doctorDropdown.innerHTML = '<option>Loading Doctors...</option>';
 
-    fetch(`https://lifecare-management-system.onrender.com/doctors/byHospital/${hospitalId}`)
+    fetch(`http://localhost:8080/doctors/byHospital/${hospitalId}`)
         .then(response => response.json())
         .then(doctors => {
             doctorDropdown.innerHTML = '<option value="">Select Doctor</option>';
@@ -201,7 +201,7 @@ document.getElementById("appointmentForm").addEventListener("submit", function (
         appointmentTime: document.getElementById("appointmentTime").value
     };
 
-    fetch("https://lifecare-management-system.onrender.com/appointments/bookAppointment", {
+    fetch("http://localhost:8080/appointments/bookAppointment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(appointmentData)

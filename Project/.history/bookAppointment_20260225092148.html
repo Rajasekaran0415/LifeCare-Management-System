@@ -201,7 +201,7 @@ document.getElementById("appointmentForm").addEventListener("submit", function (
         appointmentTime: document.getElementById("appointmentTime").value
     };
 
-    fetch("https://lifecare-management-system.onrender.com/appointments/bookAppointment", {
+    fetch("http://localhost:8080/appointments/bookAppointment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(appointmentData)
