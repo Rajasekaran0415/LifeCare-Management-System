@@ -13,7 +13,7 @@ import com.Healthmanagement.HealthManagement.Services.HospitalService;
 
 //@CrossOrigin(origins="http://127.0.0.1:5500")
 @RestController
-//@RequestMapping("/hospital")
+@RequestMapping("/hospital")
 public class HospitalController {
 
     @Autowired
