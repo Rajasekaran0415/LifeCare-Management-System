@@ -144,7 +144,7 @@ dateInput.setAttribute('min', today);
 
 function populateHospitals() {
     const hospitalDropdown = document.getElementById("hospitalDropdown");
-    fetch("https://lifecare-management-system.onrender.com/hospital/hospital")
+    fetch("https://lifecare-management-system.onrender.com/hospital/")
         .then(response => response.json())
         .then(hospitals => {
             hospitalDropdown.innerHTML = '<option value="">Select Hospital</option>';
