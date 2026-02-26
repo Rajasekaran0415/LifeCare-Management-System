@@ -201,13 +201,14 @@
     .then(response => response.json())
 .then(data => {
     if (data && data.id) {
-        
+        // Ippo dhaan mukkiam! 
+        // Backend-la irundhu vara pudhu ID-ah store pannunga
         sessionStorage.setItem("patientId", data.id);
         sessionStorage.setItem("patientName", data.name);
       alert("Welcome to LifeCare! Signup Successful.");
       window.location.href = "patientlogin.html";
-  }})
-
+    })
+}
     .catch(error => {
       console.error("Error:", error);
       alert("Error: " + error.message);
