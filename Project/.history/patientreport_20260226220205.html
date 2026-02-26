@@ -24,15 +24,15 @@
 </div>
 
 <script>
-let currentPatientId = 0; 
-currentPatientId++;
+const currentPatientId = sessionStorage.getItem("loggedInPatientId");
 
 function downloadReport(patientid) {
-
-    if (!patientid || patientid === 0) {
-        alert("Error: Patient ID is missing or invalid. Please log in.");
-        return;
-    }
+    
+    if (!patientid || patientid == 0) {
+        alert("Error: Please login first to download your report.");
+        window.location.href = "login.html"; 
+        return;
+    }
 
 
     fetch(`https://lifecare-management-system.onrender.com/patients/report/${patientid}`, {
