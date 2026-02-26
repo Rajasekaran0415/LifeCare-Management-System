@@ -17,7 +17,7 @@ import com.Healthmanagement.HealthManagement.Services.PrescriptionServices;
 
 @RestController
 @RequestMapping("/prescription")
-@CrossOrigin(origins = "http://127.0.0.1:5500")// allow frontend to call
+//@CrossOrigin(origins = "http://127.0.0.1:5500")// allow frontend to call
 public class PrescriptionController {
 	@Autowired
 	PrescriptionServices prescriptionservices;
