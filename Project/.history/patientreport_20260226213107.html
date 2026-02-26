@@ -30,23 +30,26 @@
 </div>
 
 <script>
-  
+    // 1. Page load aagum podhu Session-la irundhu ID matrum Name-ah edukkirom
+    // Login success aagum podhu idhai neenga save pannirukkanum:
+    // sessionStorage.setItem("patientId", data.id);
+    // sessionStorage.setItem("patientName", data.name);
 
     const patientId = sessionStorage.getItem("patientId");
     const patientName = sessionStorage.getItem("patientName");
 
-
+    // UI-la name-ah kaatta
     if (patientName) {
         document.getElementById("displayName").innerText = "Welcome, " + patientName;
     }
 
-  
+    // Button-ku event listener sethu dynamic ID-ah anuppurom
     document.getElementById("downloadBtn").addEventListener("click", function() {
         downloadReport(patientId);
     });
 
     function downloadReport(id) {
-        
+        // ID illai na login page-ku poga sollurom
         if (!id || id === "0" || id === null) {
             alert("Error: Patient ID is missing. Please log in again.");
             window.location.href = "patientlogin.html"; 
