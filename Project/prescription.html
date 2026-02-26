@@ -121,7 +121,7 @@ document.getElementById("issueForm").addEventListener("submit", function(e) {
     doctorName: document.getElementById("doctorName")
 };
 
-    fetch("http://localhost:8080/prescription/generate-image", {
+    fetch("https://lifecare-management-system.onrender.com/generate-image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)

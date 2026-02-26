@@ -55,7 +55,7 @@
 <div class="main-container">
     <div class="mb-2 text-start">
         <a href="index.html" class="btn-home">
-            <i class="bi bi-arrow-left-circle me-2"></i>Back to Home
+            <i class="bi bi-arrow-left-circle me-1"></i>Back to Home
         </a>
     </div>
 
@@ -115,12 +115,13 @@ document.getElementById("issueForm").addEventListener("submit", function(e) {
     if (document.getElementById("headache").checked) issueArray.push("Headache");
     if (document.getElementById("cold").checked) issueArray.push("Cold");
 
-    const data = {
-        name: document.getElementById("name").value.trim(),
-        issue: issueArray.join(", ") 
-    };
+   const data = {
+    name: document.getElementById("name").value.trim(),
+    issue: issueArray.join(", "),
+    doctorName: document.getElementById("doctorName")
+};
 
-    fetch("http://localhost:8080/prescription/generate-image", {
+    fetch("https://lifecare-management-system.onrender.com/generate-image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
