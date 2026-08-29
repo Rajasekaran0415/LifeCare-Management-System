@@ -156,6 +156,7 @@
             console.log("Patient login:", data);
             sessionStorage.setItem("patientId", data.id);
             sessionStorage.setItem("patientName", data.name);
+            sessionStorage.setItem("patientProfile", JSON.stringify(data));
             window.location.href = "index.html"; 
         })
         .catch(error => {

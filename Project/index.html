@@ -39,8 +39,25 @@
                 <li class="nav-item"><a href="doctors.html" class="nav-link">Doctors</a></li>
                 <li class="nav-item"><a href="about us.html" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="inbox.html" class="nav-link">Inbox</a></li>
-                <li class="nav-item ms-lg-3"><a href="login.html" class="btn btn-outline-info rounded-pill px-4">Login</a></li>
-                <li class="nav-item"><a href="signup.html" class="btn btn-info bg-gradient text-white rounded-pill px-4">Sign-up</a></li>
+                <li class="nav-item ms-lg-3" id="navLoginBtn"><a href="login.html" class="btn btn-outline-info rounded-pill px-4">Login</a></li>
+                <li class="nav-item" id="navSignupBtn"><a href="signup.html" class="btn btn-info bg-gradient text-white rounded-pill px-4">Sign-up</a></li>
+                <li class="nav-item dropdown" id="navProfileMenu" style="display: none;">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="rounded-circle bg-info text-white d-inline-flex align-items-center justify-content-center fw-bold" id="profileAvatar" style="width: 36px; height: 36px;">U</span>
+                        <span class="fw-semibold text-dark" id="profileName">User</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow rounded-4 border-0" aria-labelledby="profileDropdown">
+                        <li class="px-3 py-2 border-bottom">
+                            <small class="text-muted d-block">Signed in as</small>
+                            <span class="fw-semibold" id="profileSub"></span>
+                        </li>
+                        <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user me-2 text-info"></i>My Profile</a></li>
+                        <li><a class="dropdown-item" href="bookAppointment.html"><i class="fa-solid fa-calendar-plus me-2 text-info"></i>Book Appointment</a></li>
+                        <li><a class="dropdown-item" href="patientreport.html"><i class="fa-solid fa-chart-line me-2 text-info"></i>My Reports</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -184,5 +201,49 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        function getInitials(name) {
+            if (!name) return "U";
+            return name.trim().split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase();
+        }
+
+        const patientProfile = JSON.parse(sessionStorage.getItem("patientProfile") || "null");
+        const patientName = sessionStorage.getItem("patientName");
+        const nurseLoggedIn = sessionStorage.getItem("nurseLoggedIn");
+
+        let userName = null;
+        let userRole = "";
+        let avatar = getInitials(patientName);
+
+        if (patientProfile && patientProfile.name) {
+            userName = patientProfile.name;
+            userRole = "Patient";
+        } else if (patientName) {
+            userName = patientName;
+            userRole = "Patient";
+        } else if (nurseLoggedIn && sessionStorage.getItem("nurseName")) {
+            userName = sessionStorage.getItem("nurseName");
+            userRole = "Nurse @ " + (sessionStorage.getItem("nurseHospital") || "LifeCare");
+            avatar = getInitials(userName);
+        }
+
+        if (userName) {
+            document.getElementById("navLoginBtn").style.display = "none";
+            document.getElementById("navSignupBtn").style.display = "none";
+            document.getElementById("navProfileMenu").style.display = "";
+            document.getElementById("profileAvatar").textContent = avatar;
+            document.getElementById("profileName").textContent = userName.split(" ")[0];
+            document.getElementById("profileSub").textContent = userRole;
+        }
+
+        document.getElementById("logoutBtn").addEventListener("click", function (event) {
+            event.preventDefault();
+            sessionStorage.clear();
+            window.location.href = "index.html";
+        });
+    });
+</script>
 </body>
 </html>
