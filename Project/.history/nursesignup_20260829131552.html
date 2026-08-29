@@ -81,7 +81,7 @@
 </head>
 <body>
 
-<div class="signup-container animate__animated animate__backInUp">
+<div class="signup-container ">
     <div class="row g-0">
         <div class="col-md-5 info-side">
             <div class="mb-4">
@@ -130,6 +130,13 @@
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Working Hospital</label>
+                    <select class="form-select" name="hospitalName" id="hospitalName" required>
+                        <option value="">Select Hospital</option>
+                    </select>
+                </div>
+
                 <div class="mb-4">
                     <label class="form-label small fw-bold">Identification Proof (ID Card)</label>
                     <input type="file" class="form-control" name="idProof" id="idProof" accept=".jpg,.jpeg,.png,.pdf" required>
@@ -149,6 +156,25 @@
 </div>
 
 <script>
+    const HOSPITAL_API = "https://lifecare-management-system.onrender.com/hospital/hospital";
+
+    function populateHospitals() {
+        fetch(HOSPITAL_API)
+            .then(response => response.json())
+            .then(hospitals => {
+                const select = document.getElementById("hospitalName");
+                hospitals.forEach(hospital => {
+                    const option = document.createElement("option");
+                    option.value = hospital.name;
+                    option.textContent = hospital.name;
+                    select.appendChild(option);
+                });
+            })
+            .catch(err => console.error("Error loading hospitals:", err));
+    }
+
+    document.addEventListener("DOMContentLoaded", populateHospitals);
+
     document.getElementById("nurseSignup").addEventListener("submit", function(event) {
         event.preventDefault();
 
