@@ -24,7 +24,7 @@
             <i class="bi bi-house-door me-2"></i>Back to Home
         </a>
         <h1 class="mt-4 fw-bold text-dark">Patient Appointments</h1>
-        <p class="text-muted">Viewing all scheduled medical consultations</p>
+        <p class="text-muted" id="subtitle">Viewing all scheduled medical consultations</p>
     </div>
 
     <div class="table-container animate__animated animate__fadeInUp">
@@ -53,18 +53,30 @@
 <script>
     const API_URL = "https://lifecare-management-system.onrender.com/appointments/getall"; 
 
+    const nurseHospital = sessionStorage.getItem("nurseHospital") || "";
+
     async function loadAppointments() {
         const tableBody = document.getElementById('appointmentTableBody');
+        const subtitle = document.getElementById('subtitle');
         
+        if (nurseHospital) {
+            subtitle.textContent = `Showing appointments for ${nurseHospital}`;
+        }
+
         try {
             const response = await fetch(API_URL);
             if (!response.ok) throw new Error("Network response was not ok");
             
-            const appointments = await response.json();
+            const all = await response.json();
             tableBody.innerHTML = ""; 
 
+            const appointments = (Array.isArray(all) ? all : []).filter(app => {
+                if (!nurseHospital) return true;
+                return (app.hospitalName || "").toLowerCase() === nurseHospital.toLowerCase();
+            });
+
             if (appointments.length === 0) {
-                tableBody.innerHTML = "<tr><td colspan='6' class='text-center'>No appointments found.</td></tr>";
+                tableBody.innerHTML = `<tr><td colspan='6' class='text-center'>No appointments found for your hospital.</td></tr>`;
                 return;
             }
 

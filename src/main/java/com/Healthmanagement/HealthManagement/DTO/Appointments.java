@@ -20,7 +20,8 @@ import jakarta.persistence.Id;
 			this.hospitalName = hospitalName;
 		}
 
-		private String patientName;
+	    private String patientName;
+	    private int patientId;
 	    private String doctorName;
 	    private String appointmentDate;
 	    private String appointmentTime;
@@ -32,6 +33,14 @@ import jakarta.persistence.Id;
 
 	    public void setId(int id) {
 	        this.id = id;
+	    }
+
+	    public int getPatientId() {
+	        return patientId;
+	    }
+
+	    public void setPatientId(int patientId) {
+	        this.patientId = patientId;
 	    }
 
 	    public String getPatientName() {
@@ -67,12 +76,13 @@ import jakarta.persistence.Id;
 	    }
 
 		
-		public Appointments(int id, String hospitalName, String patientName, String doctorName, String appointmentDate,
+		public Appointments(int id, String hospitalName, String patientName, int patientId, String doctorName, String appointmentDate,
 				String appointmentTime) {
 			super();
 			this.id = id;
 			this.hospitalName = hospitalName;
 			this.patientName = patientName;
+			this.patientId = patientId;
 			this.doctorName = doctorName;
 			this.appointmentDate = appointmentDate;
 			this.appointmentTime = appointmentTime;
@@ -85,8 +95,8 @@ import jakarta.persistence.Id;
 		@Override
 		public String toString() {
 			return "Appointments [id=" + id + ", hospitalName=" + hospitalName + ", patientName=" + patientName
-					+ ", doctorName=" + doctorName + ", appointmentDate=" + appointmentDate + ", appointmentTime="
-					+ appointmentTime + "]";
+					+ ", patientId=" + patientId + ", doctorName=" + doctorName + ", appointmentDate=" + appointmentDate
+					+ ", appointmentTime=" + appointmentTime + "]";
 		}
 	    
 	}

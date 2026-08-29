@@ -160,6 +160,18 @@ function populateHospitals() {
 
 document.addEventListener("DOMContentLoaded", populateHospitals);
 
+document.addEventListener("DOMContentLoaded", function () {
+    const patientName = sessionStorage.getItem("patientName");
+    const patientId = sessionStorage.getItem("patientId");
+    if (patientName && document.getElementById("patientName")) {
+        document.getElementById("patientName").value = patientName;
+        document.getElementById("patientName").readOnly = true;
+    }
+    if (patientId) {
+        document.getElementById("patientName").setAttribute("data-patient-id", patientId);
+    }
+});
+
 document.getElementById("hospitalDropdown").addEventListener("change", function () {
     const hospitalId = this.value;
     const doctorDropdown = document.getElementById("doctorDropdown");
@@ -193,9 +205,18 @@ document.getElementById("appointmentForm").addEventListener("submit", function (
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Booking...';
     btn.disabled = true;
 
+    const patientId = parseInt(sessionStorage.getItem("patientId")) || 0;
+    if (!patientId) {
+        alert("Please log in as a patient before booking an appointment.");
+        btn.innerHTML = 'Confirm Booking <i class="bi bi-calendar-check ms-2"></i>';
+        btn.disabled = false;
+        return;
+    }
+
     const appointmentData = {
         patientName: document.getElementById("patientName").value,
-        hospitalId: document.getElementById("hospitalDropdown").value,
+        patientId: patientId,
+        hospitalName: document.getElementById("hospitalDropdown").selectedOptions[0]?.textContent || "",
         doctorName: document.getElementById("doctorDropdown").value,
         appointmentDate: document.getElementById("appointmentDate").value,
         appointmentTime: document.getElementById("appointmentTime").value

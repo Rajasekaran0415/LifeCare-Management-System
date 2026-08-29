@@ -28,8 +28,12 @@ public class AppointmentsDAO {
 	        }
 	        return null; 
 	    }
-	    public List<Appointments> getAllAppointments() {
-	    	return repo.findAll();
-	    }
-	   
+    public List<Appointments> getAllAppointments() {
+    	return repo.findAll();
+    }
+
+    public List<Appointments> findAppointmentsByPatientId(int patientId) {
+        return repo.findByPatientId(patientId);
+    }
+    
 }

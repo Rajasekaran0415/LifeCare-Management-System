@@ -19,12 +19,13 @@ public class NurseLogin {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	public NurseLogin(int id, String name, String password, String department, Blob idcard) {
+	public NurseLogin(int id, String name, String password, String department, String hospitalName, Blob idcard) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.department = department;
+		this.hospitalName = hospitalName;
 		this.idcard = idcard;
 	}
 	public String getPassword() {
@@ -35,6 +36,7 @@ public class NurseLogin {
 	}
 	private String password;
 	private String department;
+	private String hospitalName;
 	@Lob
 	private Blob idcard;
 	public int getId() {
@@ -55,6 +57,12 @@ public class NurseLogin {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
+	public String getHospitalName() {
+		return hospitalName;
+	}
+	public void setHospitalName(String hospitalName) {
+		this.hospitalName = hospitalName;
+	}
 	public Blob getIdcard() {
 		return idcard;
 	}
@@ -68,7 +76,7 @@ public class NurseLogin {
 	@Override
 	public String toString() {
 		return "NurseLogin [id=" + id + ", name=" + name + ", password=" + password + ", department=" + department
-				+ ", idcard=" + idcard + "]";
+				+ ", hospitalName=" + hospitalName + ", idcard=" + idcard + "]";
 	}
 	
 	

@@ -154,6 +154,8 @@
         })
         .then(data => {
             console.log("Patient login:", data);
+            sessionStorage.setItem("patientId", data.id);
+            sessionStorage.setItem("patientName", data.name);
             window.location.href = "index.html"; 
         })
         .catch(error => {

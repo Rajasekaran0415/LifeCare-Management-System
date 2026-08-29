@@ -25,4 +25,8 @@ public class AppointmentServices {
 	        return dao.getAllAppointments();
 	    }
 
+		public List<Appointments> getAppointmentsByPatientId(int patientId) {
+	        return dao.findAppointmentsByPatientId(patientId);
+	    }
+
 }

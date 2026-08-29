@@ -294,6 +294,10 @@
 
             sessionStorage.setItem("nurseLoggedIn", "true");
 
+            sessionStorage.setItem("nurseName", data.name);
+
+            sessionStorage.setItem("nurseHospital", data.hospitalName || "");
+
             window.location.href = "nurseHompage.html";
 
         })

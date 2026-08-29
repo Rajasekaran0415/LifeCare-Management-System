@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeCare | Patient Appointment History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Poppins', sans-serif; }
+        .table-container { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .table thead { background-color: #0dcaf0; color: white; }
+        .nav-back { background: #0dcaf0; padding: 10px 20px; border-radius: 50px; display: inline-block; transition: 0.3s; }
+        .nav-back:hover { background: #0baccc; transform: translateX(-5px); }
+        .badge-date { background-color: #e3f2fd; color: #0d6efd; border: 1px solid #0d6efd; }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .stat-icon {
+            width: 52px; height: 52px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+        }
+        .stat-icon.total { background: #e3f2fd; color: #0d6efd; }
+        .stat-icon.upcoming { background: #fff3cd; color: #f0ad4e; }
+        .stat-icon.past { background: #d1e7dd; color: #198754; }
+        .stat-icon.book { background: #f8d7da; color: #dc3545; }
+
+        .stat-card .num { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+        .stat-card .lbl { color: #6c757d; font-size: 0.85rem; }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, #0dcaf0 0%, #007bff 100%);
+            border-radius: 15px;
+            padding: 20px 25px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .welcome-banner h4 { font-weight: 700; margin: 0; }
+        .welcome-banner p { margin: 0; opacity: 0.9; }
+        .filter-input { max-width: 280px; }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="text-start mb-4 animate__animated animate__fadeIn">
+        <a href="index.html" class="nav-back text-white text-decoration-none small shadow-sm">
+            <i class="bi bi-arrow-left me-2"></i>Back to Home
+        </a>
+    </div>
+
+    <div class="welcome-banner mb-4 animate__animated animate__fadeIn">
+        <div>
+            <h4><i class="bi bi-calendar2-check me-2"></i>My Appointment Dashboard</h4>
+            <p id="welcomeText">Loading your appointment history...</p>
+        </div>
+        <a href="bookAppointment.html" class="btn btn-light rounded-pill px-4 fw-semibold shadow-sm">
+            <i class="bi bi-plus-circle me-1"></i>Book New Appointment
+        </a>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="row g-3 mb-4 animate__animated animate__fadeInUp">
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon total"><i class="bi bi-clipboard2-pulse"></i></div>
+                <div><div class="num" id="statTotal">0</div><div class="lbl">Total Appointments</div></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon upcoming"><i class="bi bi-hourglass-split"></i></div>
+                <div><div class="num" id="statUpcoming">0</div><div class="lbl">Upcoming</div></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon past"><i class="bi bi-check-circle"></i></div>
+                <div><div class="num" id="statPast">0</div><div class="lbl">Completed</div></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon book"><i class="bi bi-calendar-plus"></i></div>
+                <div><div class="num"><a href="bookAppointment.html" class="text-decoration-none text-danger">+</a></div><div class="lbl">Book Now</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2 animate__animated animate__fadeInUp">
+        <h5 class="fw-bold mb-0"><i class="bi bi-list-ul me-2 text-info"></i>Appointment Details</h5>
+        <input type="text" class="form-control filter-input" id="searchInput" placeholder="Search hospital / doctor / date...">
+    </div>
+
+    <div class="table-container animate__animated animate__fadeInUp">
+        <div id="loader" class="text-center py-4">
+            <div class="spinner-border text-info" role="status"></div>
+            <p class="mt-2 text-muted mb-0">Loading your history...</p>
+        </div>
+        <div id="errorBox" class="alert alert-danger d-none" role="alert"></div>
+        <div id="emptyState" class="text-center py-5 d-none">
+            <i class="bi bi-calendar-x" style="font-size: 3rem; color: #d0d5dd;"></i>
+            <h5 class="fw-bold text-dark mt-3">No appointments found</h5>
+            <p class="text-muted">Book your first appointment to see it here.</p>
+            <a href="bookAppointment.html" class="btn btn-info rounded-pill px-4 shadow-sm text-white">Book Appointment</a>
+        </div>
+
+        <div class="table-responsive d-none" id="tableWrapper">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th class="py-3">ID</th>
+                        <th class="py-3">Hospital</th>
+                        <th class="py-3">Doctor</th>
+                        <th class="py-3">Date</th>
+                        <th class="py-3">Time</th>
+                        <th class="py-3">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = "https://lifecare-management-system.onrender.com/appointments/getall";
+
+    const loader = document.getElementById('loader');
+    const errorBox = document.getElementById('errorBox');
+    const emptyState = document.getElementById('emptyState');
+    const tableWrapper = document.getElementById('tableWrapper');
+    const historyBody = document.getElementById('historyBody');
+    const searchInput = document.getElementById('searchInput');
+
+    let allAppointments = [];
+
+    function getLoggedInPatient() {
+        const patientId = parseInt(sessionStorage.getItem("patientId")) || 0;
+        const patientName = (sessionStorage.getItem("patientName") || "").toLowerCase().trim();
+        return { patientId, patientName };
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return "-";
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
+        return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+    }
+
+    function toComparable(dateStr) {
+        if (!dateStr) return null;
+        const p = dateStr.split("-").map(Number);
+        if (p.length === 3 && !isNaN(p[0]) && !isNaN(p[1]) && !isNaN(p[2])) {
+            return p[0] * 10000 + p[1] * 100 + p[2];
+        }
+        return null;
+    }
+
+    function formatTime(timeStr) {
+        if (!timeStr) return "-";
+        const parts = timeStr.split(":");
+        const h = Number(parts[0]);
+        if (isNaN(h)) return timeStr;
+        const suffix = h >= 12 ? "PM" : "AM";
+        const hr = h % 12 === 0 ? 12 : h % 12;
+        return `${hr.toString().padStart(2,"0")}:${(parts[1]||"00")} ${suffix}`;
+    }
+
+    function isAppointmentForMe(app) {
+        const { patientId, patientName } = getLoggedInPatient();
+        if (patientId && app.patientId) {
+            return Number(app.patientId) === patientId;
+        }
+        if (patientName && app.patientName) {
+            return String(app.patientName).toLowerCase().trim() === patientName;
+        }
+        return false;
+    }
+
+    function getStatus(app) {
+        const dateKey = toComparable(app.appointmentDate);
+        if (dateKey === null) return "upcoming";
+        const todayKey = toComparable(new Date().toISOString().split('T')[0]);
+        return dateKey < todayKey ? "completed" : "upcoming";
+    }
+
+    function renderRows() {
+        const query = searchInput.value.toLowerCase().trim();
+        const filtered = allAppointments.filter(a => {
+            if (!query) return true;
+            return `${a.hospitalName} ${a.doctorName} ${a.appointmentDate} ${a.appointmentTime}`
+                .toLowerCase().includes(query);
+        });
+
+        historyBody.innerHTML = "";
+
+        if (filtered.length === 0) {
+            historyBody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-4">No matching appointments found.</td></tr>`;
+            return;
+        }
+
+        filtered.forEach(app => {
+            const status = getStatus(app);
+            const isCompleted = status === "completed";
+            const badge = isCompleted
+                ? '<span class="badge bg-success bg-opacity-10 text-success"><i class="bi bi-check-circle me-1"></i>Completed</span>'
+                : '<span class="badge bg-warning bg-opacity-10 text-warning"><i class="bi bi-hourglass-split me-1"></i>Upcoming</span>';
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="fw-bold text-info">#${app.id}</td>
+                <td><i class="bi bi-hospital me-2 text-info"></i>${app.hospitalName || 'N/A'}</td>
+                <td class="fw-semibold">Dr. ${app.doctorName || 'N/A'}</td>
+                <td><span class="badge badge-date">${formatDate(app.appointmentDate)}</span></td>
+                <td><small class="text-muted"><i class="bi bi-clock me-1"></i>${formatTime(app.appointmentTime)}</small></td>
+                <td>${badge}</td>
+            `;
+            historyBody.appendChild(tr);
+        });
+    }
+
+    function updateStats() {
+        let total = allAppointments.length;
+        let upcoming = 0, past = 0;
+        allAppointments.forEach(a => {
+            if (getStatus(a) === "completed") past++; else upcoming++;
+        });
+        document.getElementById('statTotal').textContent = total;
+        document.getElementById('statUpcoming').textContent = upcoming;
+        document.getElementById('statPast').textContent = past;
+    }
+
+    async function loadHistory() {
+        const { patientId, patientName } = getLoggedInPatient();
+
+        if (patientName) {
+            document.getElementById('welcomeText').textContent = `Showing the appointment history for ${sessionStorage.getItem("patientName")}.`;
+        }
+
+        if (!patientId && !patientName) {
+            loader.classList.add('d-none');
+            errorBox.classList.remove('d-none');
+            errorBox.textContent = "You are not logged in. Please log in to view your appointment history.";
+            return;
+        }
+
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error(`Server returned: ${response.status}`);
+            const all = await response.json();
+
+            loader.classList.add('d-none');
+
+            allAppointments = (Array.isArray(all) ? all : []).filter(isAppointmentForMe);
+
+            if (allAppointments.length === 0) {
+                emptyState.classList.remove('d-none');
+                updateStats();
+                return;
+            }
+
+            tableWrapper.classList.remove('d-none');
+            updateStats();
+            renderRows();
+        } catch (error) {
+            console.error("Error loading history:", error);
+            loader.classList.add('d-none');
+            errorBox.classList.remove('d-none');
+            errorBox.textContent = "Failed to load your appointment history: " + (error.message || "Unknown error");
+        }
+    }
+
+    searchInput.addEventListener('input', renderRows);
+    document.addEventListener('DOMContentLoaded', loadHistory);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

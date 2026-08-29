@@ -24,8 +24,7 @@
 </div>
 
 <script>
-let currentPatientId = 0; 
-currentPatientId++;
+let currentPatientId = parseInt(sessionStorage.getItem("patientId")) || 0; 
 
 function downloadReport(patientid) {
 
